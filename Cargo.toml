@@ -1,0 +1,6 @@
+[workspace]
+members = [
+  "intrors-util",
+  "intrors-intro",
+]
+exclude = ["**/target/*", "**/build/*", "**/*~"]

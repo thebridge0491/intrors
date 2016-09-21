@@ -1,0 +1,54 @@
+= {{parentcap}}{{^parentcap}}Intrors{{/parentcap}}{{joiner}}{{^joiner}}-{{/joiner}}{{projectcap}}{{^projectcap}}Util{{/projectcap}}
+:author: {{author}}{{^author}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}{{/author}}
+:email: <{{email}}{{^email}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}-codelab@yahoo.com{{/email}}>
+:revnumber: {{version}}{{^version}}0.1.0{{/version}}
+:description: README for {{name}}{{^name}}intrors-util{{/name}}
+:hardbreaks:
+:linkcss:
+//:stylesheet!:
+
+////
+.adoc to .html: asciidoctor -n -a toc -a toclevels=2 foo.adoc
+////
+
+{{description}}{{^description}}Utilities sub-package for Rust Intro examples project.{{/description}}
+
+== Installation
+source code tarball download:
+    
+        # [aria2c --check-certificate=false | wget --no-check-certificate | curl -kOL]
+        FETCHCMD='aria2c --check-certificate=false'
+        $FETCHCMD https://{{repohost}}{{^repohost}}bitbucket.org{{/repohost}}/{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}/{{parent}}{{^parent}}intrors{{/parent}}/[get | archive]/master.zip
+
+version control repository clone:
+        
+        git clone https://{{repohost}}{{^repohost}}bitbucket.org{{/repohost}}/{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}/{{parent}}{{^parent}}intrors{{/parent}}.git
+
+build example with make:
+cd <path> ; [sh] ./configure.sh [--prefix=$PREFIX] [--help]
+make build [test]
+
+build example with cargo:
+cd <path> ; [sh] ./configure.sh [--prefix=$PREFIX] [--help]
+[env PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig] cargo build [test]
+
+== Usage
+{{#executable}}
+        [env RSRC_PATH=<path>/resources] [$PREFIX/bin/]{{parent}}{{^parent}}intrors{{/parent}}_{{project}}{{^project}}util{{/project}}_main [-h]
+{{/executable}}
+{{^executable}}
+        // PKG_CONFIG='pkg-config --with-path=$PREFIX/lib/pkgconfig'
+        // $PKG_CONFIG --cflags --libs <ffi-lib>
+        
+        extern crate {{parent}}{{^parent}}intrors{{/parent}}_{{project}}{{^project}}util{{/project}};
+        use {{parent}}{{^parent}}intrors{{/parent}}_{{project}}{{^project}}util{{/project}}::{{project}}{{^project}}util{{/project}};
+        
+        let (arr1, arr2) = ([0, 1, 2], [10, 20, 30]);
+        let arr_prod: Vec<(i32, i32)> = cartesian_prod(&arr1, arr2);
+{{/executable}}
+
+== Author/Copyright
+Copyright (c) {{year}}{{^year}}2016{{/year}} by {{author}}{{^author}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}{{/author}} <{{email}}{{^email}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}-codelab@yahoo.com{{/email}}>
+
+== License
+Licensed under the {{license}}{{^license}}Apache-2.0{{/license}} License. See LICENSE for details.

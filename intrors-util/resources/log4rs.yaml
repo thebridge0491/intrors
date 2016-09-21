@@ -1,0 +1,32 @@
+refresh_rate: 5 seconds
+appenders:
+  root2:
+    kind: console
+    encoder:
+      pattern: "{d} - [{t}] - {l} - (({f}:{L})) - {m}{n}"
+  root1:
+    kind: file
+    path: root.log
+    encoder:
+      pattern: "{d} [{t}] {l} {M}:{m}{n}"
+  prac:
+    kind: file
+    path: prac.log
+    encoder:
+      pattern: "{d} [{t}] {l} {M}:{m}{n}"
+loggers:
+  prac:
+    level: debug
+    appenders:
+      - prac
+    additive: true
+  main:
+    level: info
+    appenders:
+      - root1
+    additive: true
+root:
+  level: debug
+  appenders:
+    - root2
+    - root1

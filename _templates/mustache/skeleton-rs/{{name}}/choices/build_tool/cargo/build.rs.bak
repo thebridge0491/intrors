@@ -1,0 +1,18 @@
+//extern crate pkg_config;
+
+use std::env;
+
+fn main() {
+	let (user_libdir, libnm) = (env::var("HOME").unwrap() + "/.local/lib",
+		"intro_c-practice");
+	/*env::set_var("PKG_CONFIG_PATH", user_libdir + "/pkgconfig");
+	let pkgcfg = pkg_config::Config::new();
+	pkgcfg.probe(libnm).unwrap();
+	let libdir = match pkg_config::Config::get_variable(libnm, "libdir") {
+		Ok(s) => s,
+		Err(_) => String::from("/usr/local/lib") //String::new()
+	};*/
+	//eprintln!("cargo:rustc-flags=-L {} -l {}", user_libdir, libnm);
+	println!("cargo:rustc-link-search={}\ncargo:rustc-link-lib={}",
+		user_libdir, libnm);
+}

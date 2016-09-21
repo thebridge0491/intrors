@@ -1,0 +1,16 @@
+//! Document crate
+
+#[macro_use]
+//extern crate libc;
+extern crate itertools;
+extern crate num;
+extern crate ini;
+extern crate log;
+
+//extern crate {{parent}}{{^parent}}intrors{{/parent}}_util;
+{{#executable}}
+
+pub mod person;
+{{/executable}}
+//pub mod classic;
+pub mod {{project}}{{^project}}util{{/project}};

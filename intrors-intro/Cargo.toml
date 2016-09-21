@@ -1,0 +1,56 @@
+[package]
+name = "intrors_intro"
+version = "0.1.0"
+authors = ["thebridge0491 <thebridge0491-codelab@yahoo.com>"]
+description = """
+Main app sub-package for Rust Intro examples project.
+"""
+#documentation = "..."
+readme = "README.rst"
+homepage = "https://bitbucket.org/thebridge0491/intrors"
+repository = "https://bitbucket.org/thebridge0491/intrors"
+license = "Apache-2.0"
+keywords = ["demo", "development", "intro"]
+#workspace = "../"
+
+#build = "build.rs"	# "build.rs", "bash build.sh", "make ??"
+#links = "intro_c-practice"
+exclude = ["target/**/*", "build/**/*", "**/*~"]
+#include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
+
+[dependencies]
+#libc = ">=0.2"
+num = ">=0.1"
+itertools = ">=0.4"
+log = ">=0.3"
+rust-ini = ">=0.9"
+#env_logger = ">=0.3"
+log4rs = { version = ">=0.4", features = ["toml"] }
+argparse = ">=0.2"
+getopts = ">=0.2"
+regex = ">=0.1"
+chrono = ">=0.2"
+rand = ">=0.3"
+serde_json = ">=0.8"
+toml = ">=0.2"
+yaml-rust = ">=0.3"
+#intrors-util = { version = ">=0.1", path = "../common" }
+
+[dev-dependencies]
+quickcheck = ">=0.3"
+#intrors-util = { version = ">=0.1", path = "../common" }
+
+[build-dependencies]
+#pkg-config = ">=0.3"
+
+[lib]
+#name = "intrors_intro"
+#path = "src/lib.rs"
+#crate-type = ["lib"] # ["rlib", "dylib", "staticlib"]
+[[bin]]
+name = "intrors-main"
+#path = "src/main.rs"
+
+[[test]]
+name = "ts_main-intro"
+path = "tests/ts_main.rs"

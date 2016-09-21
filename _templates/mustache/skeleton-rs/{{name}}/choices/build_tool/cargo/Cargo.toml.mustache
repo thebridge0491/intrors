@@ -1,0 +1,60 @@
+[package]
+name = "{{parent}}{{^parent}}intrors{{/parent}}_{{project}}{{^project}}util{{/project}}"
+version = "{{version}}{{^version}}0.1.0{{/version}}"
+authors = ["{{author}}{{^author}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}{{/author}} <{{email}}{{^email}}{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}-codelab@yahoo.com{{/email}}>"]
+description = """
+{{description}}{{^description}}Utilities sub-package for Rust Intro examples project.{{/description}}
+"""
+#documentation = "..."
+readme = "README{{readmeext}}{{^readmeext}}.rst{{/readmeext}}"
+homepage = "https://{{repohost}}{{^repohost}}bitbucket.org{{/repohost}}/{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}/{{parent}}{{^parent}}intrors{{/parent}}"
+repository = "https://{{repohost}}{{^repohost}}bitbucket.org{{/repohost}}/{{repoacct}}{{^repoacct}}imcomputer{{/repoacct}}/{{parent}}{{^parent}}intrors{{/parent}}"
+license = "{{license}}{{^license}}Apache-2.0{{/license}}"
+keywords = ["demo", "development", "{{project}}{{^project}}util{{/project}}"]
+#workspace = "../"
+
+#build = "build.rs"	# "build.rs", "bash build.sh", "make ??"
+#links = "intro_c-practice"
+exclude = ["target/**/*", "build/**/*", "**/*~"]
+#include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
+
+[dependencies]
+#libc = ">=0.2"
+num = ">=0.1"
+itertools = ">=0.4"
+log = ">=0.3"
+rust-ini = ">=0.9"
+{{#executable}}
+#env_logger = ">=0.3"
+log4rs = { version = ">=0.4", features = ["toml"] }
+argparse = ">=0.2"
+getopts = ">=0.2"
+regex = ">=0.1"
+chrono = ">=0.2"
+rand = ">=0.3"
+serde_json = ">=0.8"
+toml = ">=0.2"
+yaml-rust = ">=0.3"
+{{/executable}}
+#{{parent}}{{^parent}}intrors{{/parent}}-util = { version = ">=0.1", path = "../common" }
+
+[dev-dependencies]
+quickcheck = ">=0.3"
+#{{parent}}{{^parent}}intrors{{/parent}}-util = { version = ">=0.1", path = "../common" }
+
+[build-dependencies]
+#pkg-config = ">=0.3"
+
+[lib]
+#name = "{{parent}}{{^parent}}intrors{{/parent}}_{{project}}{{^project}}util{{/project}}"
+#path = "src/lib.rs"
+#crate-type = ["lib"] # ["rlib", "dylib", "staticlib"]
+{{#executable}}
+[[bin]]
+name = "{{parent}}{{^parent}}intrors{{/parent}}-main"
+#path = "src/main.rs"
+{{/executable}}
+
+[[test]]
+name = "ts_main-{{project}}{{^project}}util{{/project}}"
+path = "tests/ts_main.rs"

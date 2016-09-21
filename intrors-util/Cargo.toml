@@ -1,0 +1,43 @@
+[package]
+name = "intrors_util"
+version = "0.1.0"
+authors = ["thebridge0491 <thebridge0491-codelab@yahoo.com>"]
+description = """
+Utilites sub-package for Rust Intro examples project.
+"""
+#documentation = "..."
+readme = "README.rst"
+homepage = "https://bitbucket.org/thebridge0491/intrors"
+repository = "https://bitbucket.org/thebridge0491/intrors"
+license = "Apache-2.0"
+keywords = ["demo", "development", "util"]
+#workspace = "../"
+
+#build = "build.rs"	# "build.rs", "bash build.sh", "make ??"
+#links = "intro_c-practice"
+exclude = ["target/**/*", "build/**/*", "**/*~"]
+#include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
+
+[dependencies]
+#libc = ">=0.2"
+num = ">=0.1"
+itertools = ">=0.4"
+log = ">=0.3"
+rust-ini = ">=0.9"
+#intrors-util = { version = ">=0.1", path = "../common" }
+
+[dev-dependencies]
+quickcheck = ">=0.2"
+#intrors-util = { version = ">=0.1", path = "../common" }
+
+[build-dependencies]
+#pkg-config = ">=0.3"
+
+[lib]
+#name = "intrors_util"
+#path = "src/lib.rs"
+#crate-type = ["lib"] # ["rlib", "dylib", "staticlib"]
+
+[[test]]
+name = "ts_main-util"
+path = "tests/ts_main.rs"

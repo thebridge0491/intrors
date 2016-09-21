@@ -1,0 +1,99 @@
+# Single package Makefile script.
+.SUFFIXES: .s .o .a .rs .rlib
+help:
+
+proj_dir = $(shell pwd)
+par_dir = $(shell dirname $(proj_dir))
+PKG_CONFIG = pkg-config --with-path=$(PREFIX)/lib/pkgconfig
+RUSTC = rustc
+RUSTLDFLAGS := $(RUSTLDFLAGS) -L $(par_dir)/target/release/deps
+
+parent = {{parent}}{{^parent}}intrors{{/parent}}
+pkg = {{project}}{{^project}}util{{/project}}
+proj = $(parent)-$(pkg)
+outbase = $(shell echo $(proj) | tr '-' '_')
+
+version = {{version}}{{^version}}0.1.0{{/version}}
+ver_major = $(shell echo $(version) | cut -d'.' -f1)
+
+ifeq ($(shell sh -c 'uname -s 2>/dev/null || echo not'),Darwin)
+shlibext = dylib
+else
+shlibext = so
+endif
+
+ifdef DEBUG
+CONFIG = debug
+RUSTLDFLAGS := $(RUSTLDFLAGS) -L $(par_dir)/target/$(CONFIG)
+RUSTCFLAGS := $(RUSTCFLAGS) -C debug-assertions=yes -C debuginfo=2 -C opt-level=0
+else
+CONFIG = release
+RUSTLDFLAGS := $(RUSTLDFLAGS) -C prefer-dynamic -C rpath -L $(par_dir)/target/$(CONFIG)
+RUSTCFLAGS := $(RUSTCFLAGS) -C debug-assertions=no -C debuginfo=0 -C opt-level=3
+endif
+
+# libc # pkg_config
+depns_src = num itertools log ini
+
+# ${parent}_util
+{{#executable}}
+depns_main = num log log4rs argparse getopts regex chrono rand ini serde_json toml yaml_rust
+{{/executable}}
+
+# $(outbase)
+depns_test = quickcheck
+
+build/.depend:
+#	-cargo build --release
+	-@mkdir -p build ; rm build/depns_*.txt
+	-for pkgX in $(depns_src) ; do \
+		echo "--extern $$pkgX=`ls $(par_dir)/target/release/deps/lib$$pkgX-*.rlib | head -n1`" >> build/depns_src.txt ; \
+	done
+	-for pkgX in $(depns_test) ; do \
+		echo "--extern $$pkgX=`ls $(par_dir)/target/release/deps/lib$$pkgX-*.rlib | head -n1`" >> build/depns_test.txt ; \
+	done
+{{#executable}}
+	-for pkgX in $(depns_main) ; do \
+		echo "--extern $$pkgX=`ls $(par_dir)/target/release/deps/lib$$pkgX-*.rlib | head -n1`" >> build/depns_main.txt ; \
+	done
+{{/executable}}
+	-@echo '' > build/.depend
+
+$(par_dir)/target/$(CONFIG)/lib$(outbase).rlib : src/lib.rs
+	-$(RUSTC) --crate-name $(outbase) --crate-type lib \
+		--emit link $(RUSTCFLAGS) $(RUSTLDFLAGS) `cat build/depns_src.txt` \
+		--out-dir $(par_dir)/target/$(CONFIG) $<
+{{#executable}}
+$(par_dir)/target/$(CONFIG)/$(parent)_main : src/main.rs
+	-$(RUSTC) --crate-name $(parent)_main --crate-type bin \
+		--emit link $(RUSTCFLAGS) $(RUSTLDFLAGS) `cat build/depns_main.txt` \
+		--out-dir $(par_dir)/target/$(CONFIG) $<
+{{/executable}}
+
+$(par_dir)/target/$(CONFIG)/ts_main_$(pkg) : tests/ts_main.rs
+	-$(RUSTC) --crate-name ts_main_$(pkg) --crate-type bin --test \
+		--emit link $(RUSTCFLAGS) $(RUSTLDFLAGS) `cat build/depns_test.txt` \
+		--out-dir $(par_dir)/target/$(CONFIG) $<
+
+.PHONY: build testCompile{{#executable}} run debug valgrind{{/executable}}
+
+build: build/.depend $(par_dir)/target/$(CONFIG)/lib$(outbase).rlib{{#executable}} $(par_dir)/target/$(CONFIG)/$(parent)_main{{/executable}} ## compile
+testCompile: build/.depend $(par_dir)/target/$(CONFIG)/ts_main_$(pkg) ## compile test
+{{#executable}}
+
+DEBUGGER = ddd --gdb	# rust-lldb ; ddd --gdb ; rust-gdb
+# valgrind tools: memcheck helgrind cachegrind massif lackey
+VALGRIND = valgrind --verbose --tool=memcheck
+
+run: $(par_dir)/target/$(CONFIG)/$(parent)_main ## run main [ARGS=""]
+#	export [DY]LD_LIBRARY_PATH=. # ([da|ba|z]sh Linux)
+#	setenv [DY]LD_LIBRARY_PATH . # (tcsh FreeBSD)
+	-LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):lib $< $(ARGS)
+debug: $(par_dir)/target/$(CONFIG)/$(parent)_main ## debug main [ARGS=""]
+	-LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):lib $(DEBUGGER) $< $(ARGS)
+valgrind: $(par_dir)/target/$(CONFIG)/$(parent)_main ## valgrind main
+	-LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):lib $(VALGRIND) $<
+{{/executable}}
+
+-include .depend ./Makefile-targets.mk
+#-include ./Makefile-auxffi.mk
