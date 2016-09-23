@@ -2,13 +2,8 @@
 
 mod props {
 	use quickcheck::quickcheck;
-	use intrors_intro::classic;
-
-	pub fn in_epsilon(tolerance: f64, flt1: f64, flt2: f64) -> bool {
-		let delta = tolerance.abs();
-		//(flt1 - delta) <= flt2 && (flt1 + delta) >= flt2
-		!((flt1 + delta) < flt2) && !((flt2 + delta) < flt1)
-	}
+	use intrors_foreignc::classic;
+	use intrors_util::util;
 	
 	#[test]
 	fn testprop_fact() {
@@ -39,12 +34,12 @@ mod props {
 					vec![classic::expt_lp, classic::expt_i];
 				/*let mut res = true;
 				for f in funcs {
-					res = res && in_epsilon(0.001 * ans, ans, 
+					res = res && util::in_epsilon(0.001 * ans, ans, 
 					 	unsafe { f(b as f32, n as f32) as f64 });
 				}
 				res*/
 				funcs.iter().fold(true, |acc, &f| 
-					acc && in_epsilon(0.001 * ans, ans,
+					acc && util::in_epsilon(0.001 * ans, ans,
 					unsafe { f(b as f32, n as f32) as f64 }))
 			})()
 		}

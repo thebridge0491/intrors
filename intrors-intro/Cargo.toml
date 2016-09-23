@@ -13,8 +13,6 @@ license = "Apache-2.0"
 keywords = ["demo", "development", "intro"]
 #workspace = "../"
 
-#build = "build.rs"	# "build.rs", "bash build.sh", "make ??"
-#links = "intro_c-practice"
 exclude = ["target/**/*", "build/**/*", "**/*~"]
 #include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
 
@@ -34,14 +32,14 @@ rand = ">=0.3"
 serde_json = ">=0.8"
 toml = ">=0.2"
 yaml-rust = ">=0.3"
-#intrors-util = { version = ">=0.1", path = "../common" }
+intrors_util = { version = ">=0.1", path = "../intrors-util" }
+intrors_practice = { version = ">=0.1", path = "../intrors-practice" }
 
 [dev-dependencies]
 quickcheck = ">=0.3"
-#intrors-util = { version = ">=0.1", path = "../common" }
+intrors_util = { version = ">=0.1", path = "../intrors-util" }
 
 [build-dependencies]
-#pkg-config = ">=0.3"
 
 [lib]
 #name = "intrors_intro"

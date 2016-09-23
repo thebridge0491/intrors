@@ -1,16 +1,16 @@
 [package]
-name = "intrors_util"
+name = "intrors_practice"
 version = "0.1.0"
 authors = ["thebridge0491 <thebridge0491-codelab@yahoo.com>"]
 description = """
-Utilites sub-package for Rust Intro examples project.
+Practice sub-package for Rust Intro examples project.
 """
 #documentation = "..."
 readme = "README.rst"
 homepage = "https://bitbucket.org/thebridge0491/intrors"
 repository = "https://bitbucket.org/thebridge0491/intrors"
 license = "Apache-2.0"
-keywords = ["demo", "development", "util"]
+keywords = ["demo", "development", "practice"]
 #workspace = "../"
 
 exclude = ["target/**/*", "build/**/*", "**/*~"]
@@ -20,18 +20,19 @@ exclude = ["target/**/*", "build/**/*", "**/*~"]
 #libc = ">=0.2"
 num = ">=0.1"
 itertools = ">=0.4"
-rust-ini = ">=0.9"
+log = ">=0.3"
 
 [dev-dependencies]
 quickcheck = ">=0.3"
+intrors_util = { version = ">=0.1", path = "../intrors-util" }
 
 [build-dependencies]
 
 [lib]
-#name = "intrors_util"
+#name = "intrors_practice"
 #path = "src/lib.rs"
 #crate-type = ["lib"] # ["rlib", "dylib", "staticlib"]
 
 [[test]]
-name = "ts_main-util"
+name = "ts_main-practice"
 path = "tests/ts_main.rs"

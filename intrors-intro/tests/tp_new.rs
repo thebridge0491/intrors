@@ -4,27 +4,7 @@ mod props {
 	use num::Num;
 	use std::cmp;
 	use quickcheck::quickcheck;
-
-	#[derive(Debug, Clone, PartialEq, PartialOrd)]
-	pub struct OrdF64(f64);
-
-	impl OrdF64 {
-		pub fn new(val: f64) -> OrdF64 {
-			if val.is_nan() { OrdF64(0.0) } else { OrdF64(val) }
-		}
-	}
-	impl Eq for OrdF64 {}
-	impl Ord for OrdF64 {
-		fn cmp(&self, other: &OrdF64) -> cmp::Ordering {
-			self.partial_cmp(other).unwrap()
-		}
-	}
-
-	pub fn in_epsilon(tolerance: f64, flt1: f64, flt2: f64) -> bool {
-		let delta = tolerance.abs();
-		//(flt1 - delta) <= flt2 && (flt1 + delta) >= flt2
-		!((flt1 + delta) < flt2) && !((flt2 + delta) < flt1)
-	}
+	use intrors_util::util;
 	
 	#[test]
 	fn testprop_commutadd() {
@@ -38,7 +18,7 @@ mod props {
 	fn testprop_assocadd() {
 		fn prop_assocadd<T: Into<f64> + Num + Copy>(a: T, b: T, c: T) -> bool {
 			//(a + b) + c == a + (b + c)
-			in_epsilon(0.001 * ((a + b) + c).into(), 
+			util::in_epsilon(0.001 * ((a + b) + c).into(), 
 				((a + b) + c).into(), (a + (b + c)).into())
 		}
 		quickcheck(prop_assocadd::<f64> as fn(f64, f64, f64) -> bool);
@@ -80,8 +60,8 @@ mod props {
 	fn testprop_min_sort_head() {
 		fn prop_min_sort_head<T: Into<f64> + Clone + PartialOrd>(ys: Vec<T>) -> bool {
 			if 0 < ys.len() {
-				let xs: Vec<OrdF64> = ys.into_iter().map(|e| 
-					OrdF64::new(e.into())).collect();
+				let xs: Vec<util::OrdF64> = ys.into_iter().map(|e| 
+					util::OrdF64::new(e.into())).collect();
 				let mut tmp = xs.to_vec();
 				tmp.sort();
 				xs.iter().min() == Some(tmp.get(0).unwrap())

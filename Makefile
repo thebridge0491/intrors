@@ -5,7 +5,7 @@ help:
 #MAKE = make # (GNU make variants: make (Linux) gmake (FreeBSD)
 
 parent = intrors
-SUBDIRS = $(parent)-util $(parent)-intro
+SUBDIRS = $(parent)-util $(parent)-foreignc $(parent)-practice $(parent)-intro
 
 .PHONY: configure build testCompile help clean test
 configure: $(SUBDIRS) ## configure [OPTS=""]
