@@ -28,9 +28,6 @@ use argparse::{ArgumentParser, Store, StoreTrue};
 use getopts::{Options};
 use regex::{Regex};
 use chrono::{Local};
-use ini::{Ini};
-//use serde_json::{Value};
-//use yaml_rust::{YamlLoader};
 
 use intrors_util::util;
 use intrors_practice::{classic, sequenceops};
@@ -221,40 +218,41 @@ fn main() {
     parse_cmdopts(&mut opts, &prog);
     
     
-    let ini_cfg = Ini::load_from_file(rsrc_path.to_owned() + "/prac.conf").unwrap();
+    let ini_cfg = ini::Ini::load_from_file(rsrc_path.to_owned() + "/prac.conf").unwrap();
     let ini_str = util::ini_to_str(&ini_cfg);
     
     /*let json_str = match util::read_file(&[rsrc_path, "/prac.json"].concat()) {
 		Ok(s) => s,
 		Err(_) => String::new()
 	};
-    let json_data : Value = serde_json::from_str(&json_str).unwrap();
+    let json_data : serde_json::Value = serde_json::from_str(&json_str).unwrap();
     let json_root = json_data.as_object().unwrap();
     let json_user1 = json_root["user1"].as_object().unwrap();
     
     let toml_str = util::read_file(&[rsrc_path, "/prac.toml"].concat()
 		).unwrap_or(String::new());
-    let toml_data : Value = toml::from_str(&toml_str).unwrap();
+    let toml_data : serde_json::Value = toml::from_str(&toml_str).unwrap();
     let toml_root = toml_data.as_object().unwrap();
     let toml_user1 = toml_root["user1"].as_object().unwrap();
     
     let yaml_str = util::read_file(&[rsrc_path, "/prac.yaml"].concat()
 		).unwrap_or(String::new());
-	let yaml_vec = &YamlLoader::load_from_str(&yaml_str).unwrap();
-	let yaml_user1 = &yaml_vec[0]["user1"];*/
+	let yaml_vec = &yaml_rust::YamlLoader::load_from_str(&yaml_str).unwrap();
+	let yaml_user1 = &yaml_vec[0]["user1"];
+	
+    let json_res = format!("{:?}", json_root);
+    let toml_res = format!("{:?}", toml_root);
+    let yaml_res = format!("{:?}", yaml_vec);*/
     
     let row_arr = [
 		[ini_str.as_str(),
 			ini_cfg.get_from(Some("default"), "domain").unwrap(),
 			ini_cfg.get_from(Some("user1"), "name").unwrap()]/*,
-		[json_str.as_str(),
-			json_root["domain"].as_str().unwrap(),
+		[json_res.as_str(), json_root["domain"].as_str().unwrap(),
 			json_user1["name"].as_str().unwrap()],
-		[toml_str.as_str(),
-			toml_root["domain"].as_str().unwrap(),
+		[toml_res.as_str(), toml_root["domain"].as_str().unwrap(),
 			toml_user1["name"].as_str().unwrap()],
-		[yaml_str.as_str(),
-			yaml_vec[0]["domain"].as_str().unwrap(),
+		[yaml_res.as_str(), yaml_vec[0]["domain"].as_str().unwrap(),
 			yaml_user1["name"].as_str().unwrap()]*/
     ];
     

@@ -3,7 +3,7 @@ name = "intrors_util"
 version = "0.1.0"
 authors = ["thebridge0491 <thebridge0491-codelab@yahoo.com>"]
 description = """
-Utilites sub-package for Rust Intro examples project.
+Utilities sub-package for Rust Intro examples project.
 """
 #documentation = "..."
 readme = "README.rst"
@@ -16,14 +16,18 @@ keywords = ["demo", "development", "util"]
 exclude = ["target/**/*", "build/**/*", "**/*~"]
 #include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
 
+rust-version = "1.57"
+edition = "2021"
+autotests = false
+
 [dependencies]
 #libc = ">=0.2"
-num = ">=0.1"
-itertools = ">=0.4"
-rust-ini = ">=0.9"
+num = ">=0.4"
+itertools = ">=0.10"
+rust-ini = ">=0.18"
 
 [dev-dependencies]
-quickcheck = ">=0.3"
+quickcheck = ">=1.0"
 
 [build-dependencies]
 

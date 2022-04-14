@@ -16,27 +16,31 @@ keywords = ["demo", "development", "intro"]
 exclude = ["target/**/*", "build/**/*", "**/*~"]
 #include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
 
+rust-version = "1.57"
+edition = "2021"
+autotests = false
+
 [dependencies]
 #libc = ">=0.2"
-num = ">=0.1"
-itertools = ">=0.4"
-log = ">=0.3"
-rust-ini = ">=0.9"
-#env_logger = ">=0.3"
-log4rs = { version = ">=0.4", features = ["toml"] }
+num = ">=0.4"
+itertools = ">=0.10"
+log = ">=0.4"
+rust-ini = ">=0.18"
+#env_logger = ">=0.9"
+log4rs = { version = ">=1.0", features = ["toml"] }
 argparse = ">=0.2"
 getopts = ">=0.2"
-regex = ">=0.1"
-chrono = ">=0.2"
-rand = ">=0.3"
-serde_json = ">=0.8"
-toml = ">=0.2"
-yaml-rust = ">=0.3"
+regex = ">=1.5"
+chrono = ">=0.4"
+rand = ">=0.8"
+serde_json = ">=1.0"
+toml = ">=0.5"
+yaml-rust = ">=0.4"
 intrors_util = { version = ">=0.1", path = "../intrors-util" }
 intrors_practice = { version = ">=0.1", path = "../intrors-practice" }
 
 [dev-dependencies]
-quickcheck = ">=0.3"
+quickcheck = ">=1.0"
 intrors_util = { version = ">=0.1", path = "../intrors-util" }
 
 [build-dependencies]
@@ -47,7 +51,7 @@ intrors_util = { version = ">=0.1", path = "../intrors-util" }
 #crate-type = ["lib"] # ["rlib", "dylib", "staticlib"]
 [[bin]]
 name = "intrors-main"
-#path = "src/main.rs"
+path = "src/main.rs"
 
 [[test]]
 name = "ts_main-intro"

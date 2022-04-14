@@ -16,14 +16,18 @@ keywords = ["demo", "development", "practice"]
 exclude = ["target/**/*", "build/**/*", "**/*~"]
 #include = ["resources/**/*", "**/doc/*", "**/*.rs", "Cargo.toml"]
 
+rust-version = "1.57"
+edition = "2021"
+autotests = false
+
 [dependencies]
 #libc = ">=0.2"
-num = ">=0.1"
-itertools = ">=0.4"
-log = ">=0.3"
+num = ">=0.4"
+itertools = ">=0.10"
+log = ">=0.4"
 
 [dev-dependencies]
-quickcheck = ">=0.3"
+quickcheck = ">=1.0"
 intrors_util = { version = ">=0.1", path = "../intrors-util" }
 
 [build-dependencies]

@@ -3,7 +3,7 @@ Intrors-Util
 .. .rst to .html: rst2html5 foo.rst > foo.html
 ..                pandoc -s -f rst -t html5 -o foo.html foo.rst
 
-Utilites sub-package for Rust Intro examples project.
+Utilities sub-package for Rust Intro examples project.
 
 Installation
 ------------
@@ -22,12 +22,16 @@ version control repository clone:
 build example with make:
 cd <path> ; [sh] ./configure.sh [--prefix=$PREFIX] [--help]
 
+cargo fetch
+
 make build [test]
 
 build example with cargo:
 cd <path> ; [sh] ./configure.sh [--prefix=$PREFIX] [--help]
 
-[env PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig] cargo build [test]
+cargo fetch
+
+[PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig] cargo build [test]
 
 Usage
 -----

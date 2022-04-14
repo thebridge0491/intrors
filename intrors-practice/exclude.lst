@@ -35,6 +35,9 @@ dist/*
 .cache/*
 .hypothesis/*
 .jip/*
+target/*
 javalib/*
 
 *.lock
+*.core
+Makefile

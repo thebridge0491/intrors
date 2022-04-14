@@ -3,13 +3,16 @@
 mod props {
 	use num::Num;
 	use std::cmp;
+	use std::ops::Add;
 	use quickcheck::quickcheck;
 	use intrors_util::util;
 	
 	#[test]
 	fn testprop_commutadd() {
-		fn prop_commutadd<T: Num + Copy>(a: T, b: T) -> bool {
-			a + b == b + a && a.add(b) == b.add(a)
+		fn prop_commutadd<T: Num + Copy>(a: T, b: T) -> bool where i64: From<T> {
+			//a + b == b + a && a.add(b) == b.add(a)
+			let (x, y) = (i64::from(a), i64::from(b));
+			x + y == y + x && x.add(y) == y.add(x)
 		}
 		quickcheck(prop_commutadd::<i32> as fn(i32, i32) -> bool);
 	}
@@ -53,7 +56,7 @@ mod props {
 			tmp0.sort_by(|x, y| x.partial_cmp(y).unwrap_or(cmp::Ordering::Less));
 			tmp0 == tmp1
 		}
-		quickcheck(prop_sort_reverse::<f64> as fn(Vec<f64>) -> bool);
+		quickcheck(prop_sort_reverse::<i64> as fn(Vec<i64>) -> bool);
 	}
 	
 	#[test]

@@ -31,24 +31,28 @@ pub extern fn it_works_c() {
 
 pub fn read_file(path: &str) -> Result<String, io::Error> {
     use std::fs;
+    //let mut f_in = try!(fs::File::open(path));
+    let mut f_in = match fs::File::open(path) {
+    	Ok(f_in) => f_in,
+    	Err(err) => panic!("File open error {}: {}", path, err),
+    };
     let mut txt = String::new();
-    let mut f_in = try!(fs::File::open(path));
-    /*match f_in.read_to_string(&mut txt) {
+    //try!(f_in.read_to_string(&mut txt));
+    //Ok(txt)
+    match f_in.read_to_string(&mut txt) {
 		Ok(_) => Ok(txt),
 		Err(err) => Err(err),
-	}*/
-    try!(f_in.read_to_string(&mut txt));
-    Ok(txt)
+	}
 }
 
 pub fn get_input() -> Result<String, io::Error> {
 	let mut input = String::new();
-	/*match io::stdin().read_line(&mut input) {
+	//try!(io::stdin().read_line(&mut input));
+	//Ok(input)
+	match io::stdin().read_line(&mut input) {
 		Ok(_) => Ok(input),
 		Err(err) => Err(err),
-	}*/
-	try!(io::stdin().read_line(&mut input));
-	Ok(input)
+	}
 }
 
 pub fn mkstring<T: string::ToString>(beg: &str, sep: &str, stop: &str,
@@ -117,5 +121,5 @@ pub fn cartesian_prod<T: Copy, S: Copy>(arr1: &[T], arr2: &[S]) -> Vec<(T, S)> {
 	arr_prod*/
 	//iproduct!(arr1.iter().cloned(), arr2.iter().cloned()).collect()
 	arr1.iter().flat_map(|x| arr2.iter().map(move |y| 
-		(*x, *y))).filter(|e| true).collect()
+		(*x, *y))).filter(|_| true).collect()
 }

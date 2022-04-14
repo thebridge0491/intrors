@@ -7,8 +7,8 @@ mod props {
 	
 	#[test]
 	fn testprop_fact() {
-		fn prop_fact(x: i64) -> bool {
-			let n = x.abs() % 19;
+		fn prop_fact(x: u32) -> bool {
+			let n = x % 19;
 			let ans: i64 = (1..(1 + n as i64)).product();
 			(|| {	// puzzling error: use || { ... } closure form
 				let funcs: Vec<fn(i64) -> i64> = vec![classic::fact_lp, 
@@ -18,10 +18,10 @@ mod props {
 					res = res && ans == f(n);
 				}
 				res*/
-				funcs.iter().fold(true, |acc, &f| acc && ans == f(n))
+				funcs.iter().fold(true, |acc, &f| acc && ans == f(n as i64))
 			})()
 		}
-		quickcheck(prop_fact as fn(i64) -> bool);
+		quickcheck(prop_fact as fn(u32) -> bool);
 	}
 	
 	#[test]
