@@ -17,9 +17,9 @@ version = {{version}}{{^version}}0.1.0{{/version}}
 ver_major = $(shell echo $(version) | cut -d'.' -f1)
 
 ifeq ($(shell sh -c 'uname -s 2>/dev/null || echo not'),Darwin)
-shlibext = dylib
+sosuffix = dylib
 else
-shlibext = so
+sosuffix = so
 endif
 
 ifdef DEBUG

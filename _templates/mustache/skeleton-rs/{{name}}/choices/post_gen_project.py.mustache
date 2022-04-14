@@ -26,9 +26,12 @@ def copy_pathlist(pathlist, dst):
 
 
 if '__main__' == __name__:
+	import shutil
 	os.makedirs(os.path.join('build'), exist_ok=True)
 	copy_pathlist(['choices'], 'build')
 	remove_pathlist(['choices'])
+	#os.system('mv _cargo .cargo')
+	shutil.move('_cargo', '.cargo')
 	
 	proj_dir = os.getcwd()
 	choices = {
@@ -40,37 +43,39 @@ if '__main__' == __name__:
 		'ffilib': '{{ffilib}}{{^ffilib}}none{{/ffilib}}'
 		}
 	nesteddirs = "{{nesteddirs}}{{^nesteddirs}}intrors/util{{/nesteddirs}}"
-	
-	if choices['testfrwk'] in ['testing']:
-		copy_pathlist(glob.glob('build/choices/testfrwk/{0}/*'.format(
-			choices['testfrwk'])), ".")
-	else: # default: test
-		copy_pathlist(glob.glob('build/choices/testfrwk/test/*'),
-			".")
-	
-	if 'yes' != choices['executable']:
-		remove_pathlist(glob.glob("src/main.*"))
-
-	if choices['ffilib'] in ['native']:
-		copy_pathlist(glob.glob('build/choices/ffi_lib/{0}/*'.format(
-			choices['ffilib'])), "src/")
+	project = "{{project}}{{^project}}util{{/project}}"
 
 	copy_pathlist(glob.glob('build/choices/readme/README{0}'.format(
 		choices['readmeext'])), 'README{0}'.format(choices['readmeext']))
-	copy_pathlist(glob.glob('build/choices/_parent_readme/README{0}'.format(
-		choices['readmeext'])), 'build/choices/_parent_init/README{0}'.format(
-		choices['readmeext']))
+	if os.path.exists('build/choices/_parent_readme'):
+		copy_pathlist(glob.glob('build/choices/_parent_readme/README{0}'.format(
+			choices['readmeext'])), 'build/choices/_parent_init/README{0}'.format(
+			choices['readmeext']))
 
-	if choices['license'] in ['Apache-2.0', 'MIT', 'BSD-3-Clause', 
-			'GPL-3.0+', 'ISC', 'Unlicense']:
+	if choices['license'] in ['Apache-2.0', 'MIT', 'BSD-3-Clause', 'GPL-3.0+', 'ISC',
+			'Unlicense']:
 		copy_pathlist(glob.glob('build/choices/license/LICENSE_{0}'.format(
 			choices['license'])), 'LICENSE')
 
-	if choices['buildtool'] in ['cargo', 'make']:
+	if os.path.exists('build/choices/build_tool') and choices['buildtool'] in ['cargo', 'make']:
 		copy_pathlist(glob.glob('build/choices/build_tool/{0}/*'.format(
 			choices['buildtool'])), '.')
-	else: # default: cargo
+	elif os.path.exists('build/choices/build_tool'): # default: cargo
 		copy_pathlist(glob.glob('build/choices/build_tool/cargo/*'), '.')
+	
+	if os.path.exists('build/choices/testfrwk') and choices['testfrwk'] in ['test']:
+		copy_pathlist(glob.glob('build/choices/testfrwk/{0}/*'.format(
+			choices['testfrwk'])), ".")
+	elif os.path.exists('build/choices/testfrwk'): # default: test
+		copy_pathlist(glob.glob('build/choices/testfrwk/test/*'),
+			".")
+	
+	if os.path.exists("src") and 'yes' != choices['executable']:
+		remove_pathlist(glob.glob("src/main.*"))
+
+	if os.path.exists('build/choices/ffi_lib') and choices['ffilib'] in ['native']:
+		copy_pathlist(glob.glob('build/choices/ffi_lib/{0}/*'.format(
+			choices['ffilib'])), "src/")
 	
 	if os.path.exists('../_templates') and os.path.isdir('../_templates'):
 		skeletondir = {{#skeletondir}}'{{skeletondir}}'{{/skeletondir}}{{^skeletondir}}'{0}/Templates/mustache/skeleton-rs'.format(os.getenv('HOME')){{/skeletondir}}

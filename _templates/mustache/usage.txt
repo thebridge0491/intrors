@@ -1,0 +1,58 @@
+Templates for initializing project structure.
+
+Install packages for chosen rendering script:
+  
+  (ruby) gem install [--user-install] mustache
+  
+  [(groovy) grape install com.github.spullara.mustache.java compiler '[0.8.12,)']
+
+  (groovy) grape install com.github.jknack handlebars '[4.1.3,)'
+  
+  (python) pip install [--user] [pystache] chevron
+
+Example usage:
+  
+  ruby render_mustache.rb [--data data.yaml] skeleton-rs [date=2013-10-01]
+  
+  groovy render_mustache.groovy [--data data.yaml] skeleton-rs [--kvset date=2013-10-01]
+  
+  python render_mustache.py [--data data.yaml] skeleton-rs [--kvset date=2013-10-01]
+
+  #resulting project structure
+  
+  echo #---------- ; tree -aF --dirsfirst --matchdirs -I build intrors-util
+
+#----------
+intrors-util
+├── .cargo/
+│   └── config.toml
+├── resources/
+│   ├── greet.txt
+│   ├── log4rs.{toml,yaml}
+│   └── prac.{conf,json,toml,xml,yaml}
+├── src/
+│   ├── classic.rs
+│   ├── lib.rs
+│   ├── person.rs
+│   ├── util.rs
+│  [└── main.rs]
+├── tests/
+│   ├── tc_classic.rs
+│   ├── tc_new.rs
+│   ├── tp_classic.rs
+│   ├── tp_new.rs
+│   └── ts_main.rs
+├── .editorconfig
+├── .{git,hg}ignore
+├── Cargo.toml
+├── LICENSE
+├── Makefile-auxffi.mk
+├── Makefile-targets.mk
+├── Makefile.new
+├── README.rst
+├── build.rs.bak
+├── configure.sh
+├── exclude.lst
+└── llvm-gcov.sh
+
+4 directories, 32 files

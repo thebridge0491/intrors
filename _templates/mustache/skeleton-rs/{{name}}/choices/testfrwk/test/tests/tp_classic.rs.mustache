@@ -12,8 +12,8 @@ mod props {
 	
 	#[test]
 	fn testprop_fact() {
-		fn prop_fact(x: i32) -> bool {
-			let n = x.abs() % 19;
+		fn prop_fact(x: u32) -> bool {
+			let n = x % 19;
 			let ans: i64 = (1..(1 + n as i64)).product();
 			(|| {	// puzzling error: use || { ... } closure form
 				let funcs: Vec<unsafe extern fn(i32) -> i64> = 
@@ -23,10 +23,10 @@ mod props {
 					res = res && ans == unsafe { f(n) };
 				}
 				res*/
-				funcs.iter().fold(true, |acc, &f| acc && ans == unsafe { f(n) })
+				funcs.iter().fold(true, |acc, &f| acc && ans == unsafe { f(n as i32) })
 			})()
 		}
-		quickcheck(prop_fact as fn(i32) -> bool);
+		quickcheck(prop_fact as fn(u32) -> bool);
 	}
 	
 	#[test]

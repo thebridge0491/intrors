@@ -1,19 +1,19 @@
 {
+  "parentregex": "^[a-z][-a-z0-9]+$",
+  "projectregex": "^[a-z][a-z0-9]+$",
+  "separator": "-",
+  "joiner": "-",
   "groupid": false,
   "category": false,
   "parent": "intrors",
   "parentdescription": "Multi-package project Intro examples for Rust.",
   "project": "util",
-  "description": "Utilites sub-package for Rust Intro examples project.",
+  "description": "Utilities sub-package for Rust Intro examples project.",
   "version": "0.1.0",
-  "separator": "-",
-  "joiner": "-",
-  "parentregex": "^[a-z][-a-z0-9]+$",
-  "projectregex": "^[a-z][a-z0-9]+$",
   
   "repohost": "bitbucket.org",
   "repoacct": "imcomputer",
-  "date": "2016-09-21",
+  "date": "2013-10-01",
   
   "readmeext": ".rst",
   "license": "Apache-2.0",
@@ -30,7 +30,7 @@
       "Unlicense", "Not open source"],
     "buildtool": ["cargo", "make"],
     "testfrwk": ["test"],
-    "executable": [false, "yes"],
+    "executable": ["no", "yes"],
     "ffilib": ["none", "native"]
   }
 }
